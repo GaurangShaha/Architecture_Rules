@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     alias libs.plugins.kotlin.jvm
+    id 'maven-publish'
 }
 
 java {
@@ -21,4 +22,26 @@ dependencies {
 
     testImplementation libs.detekt.test
     testImplementation libs.jupiter
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/GaurangShaha/Architecture_Rules"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+            groupId = "shaha.gaurang"
+            artifactId = "architectural-rules"
+            version = "0.0.4"
+        }
+    }
 }
