@@ -1,0 +1,13 @@
+[versions]
+detekt = "1.23.7"
+
+kotlin = "1.9.10"
+ksp = "1.9.10-1.0.13"
+
+[libraries]
+detekt-core = { group = "io.gitlab.arturbosch.detekt", name = "detekt-core", version.ref = "detekt" }
+detekt-test = { group = "io.gitlab.arturbosch.detekt", name = "detekt-test", version.ref = "detekt" }
+jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version = "5.10.2" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
