@@ -40,7 +40,7 @@ publishing {
         gpr(MavenPublication) {
             from(components.java)
             groupId = "shaha.gaurang"
-            artifactId = "architectural-ruls"
+            artifactId = "architectural-rules"
             version = "0.0.4"
         }
     }
