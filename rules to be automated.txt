@@ -1,0 +1,18 @@
+DONE - Public function in repository should return either Result or Flow - Detekt
+DONE - Repository should not have retrofit classes
+DONE - Repository should not have room classes
+
+DONE - Every view model should have UiState, Screen, Intent and Navigation associated or All viewModel should be inherited by ViewModelContract
+DONE - View model should not have savedHandleState as parameter - Detekt
+DONE - View model should not have any public method apart from processIntent
+DONE - View model should not have any public parameter of type State, MutableState, LiveData, MutableLiveData or Flow
+DONE - No public property in view model - Need to check if there are exceptions
+DONE - //file.findChildrenByClass<KtProperty>().filter { it.isPublic }.forEach { it.children.forEach {
+
+DONE - Compose function should not have parameter of type view model - Can be achieved by name comparison in detekt
+DONE - Compose function should not have parameter of type nav controller - Detekt
+DONE - Compose function should not have parameter of type window size class - Detekt
+DONE - Compose function should not use collect, collectAsState, collectIndexed, collectLatest and toCollect, instead please us collectAsStateWithLifecycle
+
+DONE - Function that returns flow should end with stream word
+Interface should not start with I and class should not end with Impl
