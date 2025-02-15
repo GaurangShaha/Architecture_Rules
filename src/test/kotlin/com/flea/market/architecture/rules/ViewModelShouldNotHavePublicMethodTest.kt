@@ -14,6 +14,7 @@ class ViewModelShouldNotHavePublicMethodTest {
         val code = """
             class NewsViewModel:ViewModelContract<ProductDetailsIntent, ProductDetailsUiState>(Loading){
                 fun processIntent(){}
+                fun error(){}
             }
 """.trimIndent()
 

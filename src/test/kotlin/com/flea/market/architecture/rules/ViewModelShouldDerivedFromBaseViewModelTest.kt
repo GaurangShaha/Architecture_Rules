@@ -12,7 +12,7 @@ class ViewModelShouldDerivedFromBaseViewModelTest {
     @Test
     fun `passes when viewmodel extends from BaseViewModel`() {
         val code = """
-            class NewsViewModel:ViewModelsContract()
+            class NewsViewModel:ViewModelContract
 """.trimIndent()
 
         assert(rule.lint(code).isEmpty())
