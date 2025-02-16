@@ -1,5 +1,6 @@
 package com.flea.market.architecture.rules
 
+import com.flea.market.architecture.util.isViewmodel
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.CorrectableCodeSmell
 import io.gitlab.arturbosch.detekt.api.Debt
@@ -15,20 +16,19 @@ class ViewModelShouldNotHavePublicProperty(config: Config) : Rule(config) {
     override val issue = Issue(
         javaClass.simpleName,
         CodeSmell,
-        "ViewModel should not have public properties",
+        "ViewModel should not have public property other than uiState",
         Debt.FIVE_MINS
     )
 
     override fun visitClass(klass: KtClass) {
         super.visitClass(klass)
-        val isViewModel = klass.getSuperTypeList()?.entries
-            ?.any { it.typeAsUserType?.referencedName == "ViewModelContract" } ?: false
 
-        if (isViewModel) {
-            klass.primaryConstructor?.valueParameters?.filter { it.isPublic }?.forEach {
-                reportError(it, it.name.orEmpty())
-            }
-            klass.body?.properties?.filter { it.isPublic }?.forEach {
+        if (klass.getSuperTypeList()?.entries?.isViewmodel == true) {
+            klass.primaryConstructor?.valueParameters?.filter { it.isPublic && it.name != "uiState" }
+                ?.forEach {
+                    reportError(it, it.name.orEmpty())
+                }
+            klass.body?.properties?.filter { it.isPublic && it.name != "uiState" }?.forEach {
                 reportError(it, it.name.orEmpty())
             }
         }

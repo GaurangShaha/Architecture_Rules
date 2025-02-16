@@ -1,5 +1,6 @@
 package com.flea.market.architecture.rules
 
+import com.flea.market.architecture.util.isViewmodel
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.CorrectableCodeSmell
 import io.gitlab.arturbosch.detekt.api.Debt
@@ -7,7 +8,6 @@ import io.gitlab.arturbosch.detekt.api.Entity
 import io.gitlab.arturbosch.detekt.api.Issue
 import io.gitlab.arturbosch.detekt.api.Rule
 import io.gitlab.arturbosch.detekt.api.Severity.CodeSmell
-import java.util.Collections.emptyList
 import org.jetbrains.kotlin.psi.KtClass
 
 class ViewModelShouldDerivedFromBaseViewModel(config: Config) : Rule(config) {
@@ -21,21 +21,17 @@ class ViewModelShouldDerivedFromBaseViewModel(config: Config) : Rule(config) {
     override fun visitClass(klass: KtClass) {
         super.visitClass(klass)
 
-        val hasDefaultViewModel = klass.getSuperTypeList()?.entries
-            ?.any {
-                it.typeAsUserType?.referencedName == "ViewModel" || it.typeAsUserType?.referencedName == "AndroidViewModel"
-            } ?: false
-
-        if (hasDefaultViewModel) {
-            report(
-                CorrectableCodeSmell(
-                    issue = issue,
-                    entity = Entity.from(klass),
-                    message = """The function ${klass.name} should be derived from ViewModelContract""",
-                    references = emptyList(),
-                    autoCorrectEnabled = false
+        if (klass.getSuperTypeList()?.entries?.isViewmodel == true)
+            if (klass.getSuperTypeList()?.entries?.none { it.typeAsUserType?.referencedName == "ViewModelContract" } == true) {
+                report(
+                    CorrectableCodeSmell(
+                        issue = issue,
+                        entity = Entity.from(klass),
+                        message = """The function ${klass.name} should be derived from BaseViewModel""",
+                        references = emptyList(),
+                        autoCorrectEnabled = false
+                    )
                 )
-            )
-        }
+            }
     }
 }

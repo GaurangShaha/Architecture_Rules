@@ -1,5 +1,6 @@
 package com.flea.market.architecture.rules
 
+import com.flea.market.architecture.util.isViewmodel
 import io.gitlab.arturbosch.detekt.api.Config
 import io.gitlab.arturbosch.detekt.api.CorrectableCodeSmell
 import io.gitlab.arturbosch.detekt.api.Debt
@@ -20,10 +21,8 @@ class ViewModelShouldNotHavePublicMethod(config: Config) : Rule(config) {
 
     override fun visitClass(klass: KtClass) {
         super.visitClass(klass)
-        val isViewModel = klass.getSuperTypeList()?.entries
-            ?.any { it.typeAsUserType?.referencedName == "ViewModelContract" } ?: false
 
-        if (isViewModel) {
+        if (klass.getSuperTypeList()?.entries?.isViewmodel == true) {
             klass.body?.functions?.filter { it.isPublic && it.name != "processIntent" }
                 ?.forEach {
                     report(

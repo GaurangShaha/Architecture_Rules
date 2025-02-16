@@ -12,7 +12,7 @@ class ViewModelShouldNotHaveSavedStateHandleAsParamTest {
     @Test
     fun `passes when viewmodel does not have parameter of type SavedStateHandle`() {
         val code = """
-            class NewsViewModel:ViewModelContract<ProductDetailsIntent, ProductDetailsUiState>(Loading)
+            class NewsViewModel:ViewModelContract<ProductDetailsIntent, ProductDetailsUiState>, ViewModel()
 """.trimIndent()
 
         assert(rule.lint(code).isEmpty())
@@ -21,7 +21,7 @@ class ViewModelShouldNotHaveSavedStateHandleAsParamTest {
     @Test
     fun `error when viewmodel have parameter of type SavedStateHandle`() {
         val code = """
-            class NewsViewModel(private val savedStateHandle: SavedStateHandle):ViewModelContract<ProductDetailsIntent, ProductDetailsUiState>(Loading)
+            class NewsViewModel(private val savedStateHandle: SavedStateHandle):ViewModelContract<ProductDetailsIntent, ProductDetailsUiState>, ViewModel()
 """.trimIndent()
 
         assert(rule.lint(code).isNotEmpty())

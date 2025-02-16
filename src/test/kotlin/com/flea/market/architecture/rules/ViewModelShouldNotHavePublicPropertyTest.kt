@@ -12,7 +12,7 @@ class ViewModelShouldNotHavePublicPropertyTest {
     @Test
     fun `passes when viewmodel does not have public property`() {
         val code = """
-            class NewsViewModel:ViewModelContract<ProductDetailsIntent, ProductDetailsUiState>(Loading){
+            class NewsViewModel:ViewModelContract<ProductDetailsIntent, ProductDetailsUiState>(Loading), ViewModel(){
                 override fun processIntent(){}
             }
 """.trimIndent()
@@ -23,7 +23,7 @@ class ViewModelShouldNotHavePublicPropertyTest {
     @Test
     fun `error when viewmodel has public property`() {
         val code = """
-            class NewsViewModel(val id: Int):ViewModelContract<ProductDetailsIntent, ProductDetailsUiState>(Loading){
+            class NewsViewModel(val id: Int):ViewModelContract<ProductDetailsIntent, ProductDetailsUiState>(Loading), ViewModel(){
                 val name = "Harry"
                 override fun processIntent(){}
             }
